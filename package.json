@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --progress --config webpack.config.build.js",
-    "development": "webpack serve --progress --config webpack.config.development.js",
-    "start": "npm run development"
+    "backend:build": "node app.js",
+    "backend:development": "nodemon app.js",
+    "frontend:build": "webpack --progress --config webpack.config.build.js",
+    "frontend:development": "webpack serve --progress --config webpack.config.development.js",
+    "start": "concurrently --kill-others \"npm run backend:development\" \"npm run frontend:development\""
   },
   "keywords": [],
   "author": "",
@@ -14,6 +16,7 @@
   "devDependencies": {
     "babel-loader": "^10.0.0",
     "clean-webpack-plugin": "^4.0.0",
+    "concurrently": "^9.2.1",
     "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
     "file-loader": "^6.2.0",
@@ -27,7 +30,9 @@
     "imagemin-pngquant": "^10.0.0",
     "imagemin-svgo": "^11.0.1",
     "mini-css-extract-plugin": "^2.9.4",
+    "nodemon": "^3.1.10",
     "postcss-loader": "^8.2.0",
+    "pug": "^3.0.3",
     "sass": "^1.92.1",
     "sass-loader": "^16.0.5",
     "terser-webpack-plugin": "^5.3.14",
@@ -35,5 +40,8 @@
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2",
     "webpack-merge": "^6.0.1"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
   }
 }

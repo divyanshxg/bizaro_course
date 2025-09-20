@@ -42,6 +42,10 @@
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "@prismicio/client": "6.2.0",
+    "@prismicio/helpers": "2.1.1",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "node-fetch": "2.6.7"
   }
 }

@@ -21,6 +21,8 @@ app.use(bodyParser.urlencoded({extended : false}))
 app.use(methodOverride())
 app.use(errorHandler())
 
+app.use(express.static(path.join(__dirname , "public")))
+
 // Initialize the prismic.io api
 const initApi = (req) => {
   return Prismic.createClient(process.env.PRISMIC_ENDPOINT, {

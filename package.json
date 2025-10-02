@@ -29,6 +29,7 @@
     "imagemin-optipng": "^8.0.0",
     "imagemin-pngquant": "^10.0.0",
     "imagemin-svgo": "^11.0.1",
+    "include-media": "^2.0.0",
     "mini-css-extract-plugin": "^2.9.4",
     "nodemon": "^3.1.10",
     "postcss-loader": "^8.2.0",

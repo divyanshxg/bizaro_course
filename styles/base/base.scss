@@ -1,0 +1,17 @@
+// $font-george-x : "George X";
+// $font-suisse-bp : "Suisse BP";
+body {
+
+  @extend %description-16;
+
+
+  font-family: $font-suisse-bp;
+  font-size: 16px;
+
+
+
+
+  @include media("<phone") {
+    font-size: 100px;
+  }
+}

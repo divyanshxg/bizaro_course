@@ -81,6 +81,9 @@ importers:
       imagemin-svgo:
         specifier: ^11.0.1
         version: 11.0.1
+      include-media:
+        specifier: ^2.0.0
+        version: 2.0.0
       mini-css-extract-plugin:
         specifier: ^2.9.4
         version: 2.9.4(webpack@5.101.3)
@@ -1753,6 +1756,9 @@ packages:
     resolution: {integrity: sha512-2SPlun1JUPWoM6t3F0dw0FkCF/jWY8kttcY4f599GLTSjh2OCuuhdTkJQsEcZzBqbXZGKMK2OqW1oZsjtf/gQA==}
     engines: {node: '>=8'}
     hasBin: true
+
+  include-media@2.0.0:
+    resolution: {integrity: sha512-LSJcffPYIZ/Kln0rIi5UhqQbZxElDCMYA4dPC5MI1rkwwjptgEiOicHnzB0MMhMNJver0+4zULb4MKlgDyapZg==}
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
@@ -5246,6 +5252,8 @@ snapshots:
     dependencies:
       pkg-dir: 4.2.0
       resolve-cwd: 3.0.0
+
+  include-media@2.0.0: {}
 
   inflight@1.0.6:
     dependencies:

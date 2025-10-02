@@ -1,13 +1,25 @@
 require("dotenv").config()
-console.log(process.env.PRISMIC_ENDPOINT, process.env.PRISMIC_CLIENT_ID)
+// console.log(process.env.PRISMIC_ENDPOINT, process.env.PRISMIC_CLIENT_ID)
 
+const logger = require("morgan")
 const express = require("express")
+const errorHandler = require("errorhandler")
 const app = express()
 const path = require("path")
 const Prismic = require('@prismicio/client');
 const PrismicH = require("@prismicio/helpers")
 const fetch = require("node-fetch")
+const bodyParser = require("body-parser")
+const methodOverride = require("method-override")
 
+
+
+
+app.use(logger("dev"))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended : false}))
+app.use(methodOverride())
+app.use(errorHandler())
 
 // Initialize the prismic.io api
 const initApi = (req) => {
@@ -92,6 +104,7 @@ const handleRequest = async (api) => {
   // return {}
 };
 
+
 // Middleware to inject prismic context
 app.use((req, res, next) => {
   // const ua = UAParser(req.headers['user-agent']);
@@ -135,7 +148,20 @@ app.set("view engine", "pug")
 
 
 app.get("/", async (req, res) => {
-  res.render("pages/home")
+
+  const api = await initApi(req);
+  const defaults = await handleRequest(api);
+
+
+  const { results : collections } = await api.query(Prismic.Predicates.at('document.type', 'collection'), {
+    fetchLinks : "product.image"
+  })
+
+
+  res.render("pages/home" , {
+    ...defaults,
+    collections
+  })
 })
 
 
@@ -148,20 +174,65 @@ app.get('/about', async (req, res) => {
   const api = await initApi(req);
   const defaults = await handleRequest(api);
 
-  console.log({ ...defaults })
+  const {about , meta} = defaults;
+
+  // console.log(about , meta)
+
+
+  console.log(about.data.body)
+  // console.log(about.data.gallery)
+
+
+  // console.log({ ...defaults })
   res.render('pages/about', {
     ...defaults,
   });
 });
 
-app.get("/detail/:id", (req, res) => {
-  res.render("pages/detail")
+app.get("/detail/:uid", async(req, res) => {
+
+  // console.log(req.params.uid)
+
+  const api = await initApi(req);
+  const defaults = await handleRequest(api);
+
+  const product = await api.getByUID('product', req.params.uid, {
+    fetchLinks: 'collection.title',
+  });
+  // const product = await api.getByUID('product', req.params.uid);
+  //
+  console.log(product)
+  // const {about , meta} = defaults;
+
+  res.render("pages/detail" , {
+    ...defaults,
+    product
+  })
 })
 
 
-app.get("/collection", async (req, res) => {
-  res.render("pages/collection")
+app.get("/collections", async (req, res) => {
+
+  const api = await initApi(req);
+  const defaults = await handleRequest(api);
+
+  // const collections = api.query(Prismic.Predicates.at('document.type', 'collection'), {
+  //       fetchLinks: 'product.image',
+  //     }),
+
+  const { results : collections } = await api.query(Prismic.Predicates.at('document.type', 'collection'), {
+    fetchLinks : "product.image"
+  })
+  console.log(collections)
+
+  res.render("pages/collections" , {
+    ...defaults,
+    collections
+  })
 })
+
+
+
 app.listen(port, () => {
   console.log(`Example app listening at port : ${port}`)
 })

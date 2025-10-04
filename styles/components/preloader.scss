@@ -1,5 +1,34 @@
-.preloader {}
+.preloader {
+  @extend %cover;
+  @extend %center;
 
-.preloader__text {}
+  background: $color-contessa;
+  // color: $color-white;
+  color: $color-quarter-spanish-white ;
+  display: none;
+  text-align: center;
+  z-index: z("preloader");
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+}
 
-.preloader__number {}
+.preloader__text {
+
+  @extend %title-53;
+  max-width: 66rem;
+
+
+}
+
+.preloader__number {
+  @extend %description-14;
+  position: absolute;
+  bottom: 7.3rem;
+  left: 50%;
+  transform: translateX(-50%);
+
+  @include media("<phone") {
+    font-size: 2.4rem;
+  }
+}

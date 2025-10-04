@@ -1,14 +1,138 @@
-.collections{}
-.collections__wrapper{}
-.collections__titles{}
-.collections__titles__label{}
-.collections__titles__title{}
-.collections__gallery{}
-.collections__gallery__wrapper{}
-.collections__gallery__link{}
-.collections__gallery__media {}
-.collections__gallery__media__image{}
-.collections__content {}
-.collections__article {}
-.collections__article__title{}
-.collections__article__description{}
+.collections {
+  @extend %cover;
+  background: $color-quicksand;
+  color: $color-quarter-spanish-white;
+
+}
+
+.collections__wrapper {
+  @extend %cover;
+
+  overflow: hidden;
+}
+
+
+.collections__titles {
+  @extend %vertical-titles;
+
+  // display: flex;
+  // align-items: center;
+  //
+  // position: absolute;
+  // left: 50%;
+  // top: 50%;
+  // transform: translate(-50%, -50%) rotate(-90deg);
+
+  @include media("<=phone") {
+    display: none
+  }
+
+}
+
+.collections__titles__label {
+  @extend %vertical-titles__label;
+  // @extend %description-12;
+  //
+  // letter-spacing: 0.1rem;
+  // margin: 0 3rem;
+  // text-align: center;
+  // text-transform: uppercase;
+  // transform: rotate(90deg);
+}
+
+.collections__titles__title {
+  @extend %vertical-titles__title;
+  // @extend %title-200;
+  //
+  // padding-top: 2rem;
+}
+
+.collections__gallery {
+  @extend %cover;
+}
+
+.collections__gallery__wrapper {
+
+  align-items: center;
+  display: flex;
+
+
+  top: 50%;
+  position: absolute;
+  transform: translateY(-50%);
+}
+
+.collections__gallery__link {
+  display: block;
+  margin: 0 5.3rem;
+}
+
+.collections__gallery__media {
+  width: 44.7rem;
+  height: 63.1rem;
+  position: relative;
+}
+
+.collections__gallery__media__image {
+  @extend %cover;
+  object-fit: cover;
+}
+
+.collections__content {
+  @extend %cover;
+
+
+
+  @include media("<=phone") {
+    display: none
+  }
+}
+
+.collections__article {
+  left: 8rem;
+  bottom: 8rem;
+  position: absolute;
+
+  opacity: 0;
+
+  &--active {
+    opacity: 1;
+  }
+}
+
+.collections__article__title {
+  @extend %title-60;
+
+}
+
+.collections__article__description {
+  @extend %description-16;
+  max-width: 44rem;
+}
+
+
+.collections__mobile {
+  display: flex;
+  position: absolute;
+
+  bottom: 5rem;
+
+}
+
+.collections__mobile__item {
+  padding-left: 5rem;
+  width: 100vw;
+
+}
+
+.collections__mobile__item__label {
+  font-size: 2rem;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+}
+
+
+.collections__mobile__item__title {
+  font-family: $font-george-x;
+  font-size: 12rem;
+}

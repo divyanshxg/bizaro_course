@@ -34,7 +34,10 @@ module.exports = {
       dirStyles,
       // dirVideos,
       dirNode
-    ]
+    ],
+    fallback: {
+      events: require.resolve("events/"),
+    },
   },
   plugins: [
     new webpack.DefinePlugin({

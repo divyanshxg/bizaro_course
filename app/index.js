@@ -4,6 +4,7 @@ import Detail from './pages/Detail'
 import Home from './pages/Home'
 import Collections from './pages/Collections'
 import { each } from 'lodash'
+import Preloader from './components/Preloader'
 
 
 class App {
@@ -11,6 +12,8 @@ class App {
   constructor() {
     // console.log("App...")
 
+
+    this.createPreloader()
     this.createContent()
     this.createPages()
 
@@ -18,11 +21,18 @@ class App {
     this.addLinkListeners()
   }
 
+  createPreloader() {
+    this.preloader = new Preloader()
+    this.preloader.once("completed", this.onPreloaded.bind(this))
+
+  }
+
   createContent() {
     this.content = document.querySelector(".content")
     this.template = this.content.getAttribute("data-template")
     // console.log(this.template)
   }
+
 
   createPages() {
     this.pages = {
@@ -36,7 +46,6 @@ class App {
 
     this.page.create()
 
-    this.page.show()
 
 
     // console.log(this.page)
@@ -46,6 +55,13 @@ class App {
 
   }
 
+  onPreloaded() {
+    // console.log("Preloaded")
+
+
+    this.preloader.destroy()
+    this.page.show()
+  }
 
   async onChange(url) {
 
@@ -74,6 +90,8 @@ class App {
       this.page = this.pages[this.template]
       this.page.create()
       this.page.show()
+
+      this.addLinkListeners()// to add smooth event listeners for content links
 
 
       // console.log(text)

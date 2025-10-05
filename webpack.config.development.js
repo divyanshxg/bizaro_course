@@ -14,5 +14,12 @@ module.exports = merge(config, {
   },
   output: {
     path: path.resolve(__dirname, "public")
-  }
+  },
+  ignoreWarnings: [
+    // Ignore all warnings coming from .scss files
+    (warning) =>
+      warning.module &&
+      warning.module.resource &&
+      warning.module.resource.endsWith(".scss")
+  ]
 })

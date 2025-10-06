@@ -1,6 +1,7 @@
 
 import gsap from 'gsap'
 import each from 'lodash/each'
+import Prefix from 'prefix'
 
 export default class Page {
   constructor({ id, element, elements }) {
@@ -12,6 +13,18 @@ export default class Page {
       ...elements
     }
     this.id = id
+    this.transformPrefix = Prefix("transform")
+    console.log(this.transformPrefix)
+
+    this.onMouseWheelEvent = this.onMouseWheel.bind(this)
+
+    this.scroll = {
+      current: 0,
+      target: 0,
+      last: 0,
+      limit: 0
+    }
+
   }
 
 
@@ -20,6 +33,14 @@ export default class Page {
     this.element = document.querySelector(this.selector)
 
     this.elements = {}
+
+
+    this.scroll = {
+      current: 0,
+      target: 0,
+      last: 0,
+      limit: 0,
+    }
 
 
     // console.log(this.selectorChildren)
@@ -54,11 +75,19 @@ export default class Page {
   show() {
 
     return new Promise(resolve => {
-      gsap.fromTo(this.element, {
+      this.animatoinIn = gsap.timeline()
+
+
+      this.animatoinIn.fromTo(this.element, {
         autoAlpha: 0
       }, {
         autoAlpha: 1,
-        onComplete: resolve
+        // onComplete: resolve
+      })
+
+      this.animatoinIn.call(_ => {
+        this.addEventListeners()
+        resolve()
       })
 
     })
@@ -69,12 +98,67 @@ export default class Page {
 
 
     return new Promise(resolve => {
+
+      this.removeEventListeners()
+      this.animatoinIn = gsap.timeline()
+
+
       gsap.to(this.element, {
         autoAlpha: 0,
         onComplete: resolve
       })
 
     })
+
+  }
+
+  onMouseWheel(event) {
+
+    const { deltaY } = event
+
+    this.scroll.target += deltaY;
+
+
+
+  }
+
+  onResize() {
+
+    if (this.elements.wrapper) {
+
+      this.scroll.limit = this.elements.wrapper.clientHeight - window.innerHeight
+    }
+  }
+
+
+
+  update() {
+    this.scroll.target = gsap.utils.clamp(0, this.scroll.limit, this.scroll.target);
+    this.scroll.current = gsap.utils.interpolate(this.scroll.current, this.scroll.target, 0.1)
+
+
+    if (this.scroll.current < 0.01) {
+      this.scroll.current = 0;
+    }
+
+    // console.log(this.scroll.target, this.scroll.current)
+
+    // console.log(this.scroll.target)
+    console.log(this.scroll.target)
+
+    if (this.elements.wrapper) {
+      this.elements.wrapper.style[this.transformPrefix] = `translateY(${-this.scroll.current}px)`
+    }
+  }
+
+
+  addEventListeners() {
+    window.addEventListener("mousewheel", this.onMouseWheelEvent)
+
+  }
+
+  removeEventListeners() {
+    window.removeEventListener("mousewheel", this.onMouseWheelEvent)
 
   }
 

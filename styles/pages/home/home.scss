@@ -1,7 +1,8 @@
 .home {
 
-  @extend %cover;
+  // @extend %cover;
   @extend %center;
+  @extend %page;
 
   background: $color-contessa;
   color: $color-quarter-spanish-white ;
